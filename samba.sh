@@ -9,13 +9,15 @@ server_name="server"
 # Server data dir
 data_dir="/data/samba"
 
-# Ethernet interfaces to bind
+# Interfaces to bind
+# Run `ip addr` or `ip link` to check interfaces.
 interfaces=( lo eno1 )
 
 # Samba users. Use space as separator.
 users=( ppt my )
 
 # Passwords of users
+# You may change the password by running `sudo smbpasswd -U <USER>` after running this script.
 declare -A passwords
 passwords[ppt]="password_for_ppt"
 passwords[my]="password_for_my"
