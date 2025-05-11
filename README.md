@@ -4,7 +4,19 @@ Setup Samba in one bash script.
 It only works on Ubuntu currently.
 
 ## Usage
-* Set variables in `samba.sh`
+* Get names of ethernet interfaces
+
+```
+ip addr
+
+// Output:
+1. lo: ....
+2. eno1: ...
+```
+
+Record the ethernet interfaces to bind with Samba.
+
+* Modify `samba.sh` before run
 
 ```bash
 # -------------------- #
