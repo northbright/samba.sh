@@ -7,6 +7,8 @@
 server_name="server"
 
 # Server data dir
+# It'll create per-user data dir under this dir when creating users.
+# e.g. /data/samba/ppt and /data/samba/my
 data_dir="/data/samba"
 
 # Interfaces to bind

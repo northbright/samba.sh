@@ -4,19 +4,14 @@ Setup Samba in one bash script.
 It only works on Ubuntu currently.
 
 ## Usage
-* Get names of interfaces
-
-```
-ip addr
-
-// Output:
-1. lo: ....
-2. eno1: ...
-```
-
-Record the interfaces to bind with Samba.
-
 * Modify `samba.sh` before run
+  * Set server name(default: `server`)
+  * Data dir(default: `/data/samba`)
+    It'll create per-user data dir under data dir(e.g. `/data/samba/ppt` and `/data/samba/my`)
+  * Bind interfaces(run `ip addr` or `ip link` to determine which interfaces to bind)
+  * User names and passwords(may be changed by `sudo smbpasswd -U <USER>` later)
+  * Samba shares of users
+  * Allowed ports of ufw firewall(default: `ssh samba`)
 
 ```bash
 # -------------------- #
@@ -26,6 +21,8 @@ Record the interfaces to bind with Samba.
 server_name="server"
 
 # Server data dir
+# It'll create per-user data dir under this dir when creating users.
+# e.g. /data/samba/ppt and /data/samba/my
 data_dir="/data/samba"
 
 # Interfaces to bind
