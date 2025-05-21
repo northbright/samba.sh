@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# How to use
+# 1. Edit below variables.
+# 2. Run this script with `sudo`: sudo ./samba.sh
+
 # -------------------- #
 # Variables
 # -------------------- #
@@ -11,9 +15,15 @@ server_name="server"
 # e.g. /data/samba/ppt and /data/samba/my
 data_dir="/data/samba"
 
-# Interfaces to bind
+# Interface to bind
 # Run `ip addr` or `ip link` to check interfaces.
-interfaces=( lo eno1 )
+interface="eno1"
+
+# netplan settings
+ip="10.0.10.3/24"
+gateway="10.0.10.1"
+dns1="223.5.5.5"
+dns2="223.6.6.6"
 
 # Samba users. Use space as separator.
 users=( ppt my )
@@ -51,7 +61,7 @@ cat <<EOF > /etc/samba/smb.conf
 
     # Bind ethernet interface
     # e.g. interfaces = lo enp1s0f0 enp1s0f1
-    interfaces = ${interfaces[@]}
+    interfaces = lo $interface
     bind interfaces only = yes
 
     # Disable NetBIOS server(optional)
@@ -128,3 +138,33 @@ echo -ne "\n" | testparm
 systemctl enable smbd.service
 systemctl start smbd.service
 systemctl status smbd.service
+
+# netplan settings
+
+# Disable CloudInit
+touch /etc/cloud/cloud-init.disabled
+
+# Create a custom network configure file.
+cat <<EOF > /etc/netplan/99-custom-network.yaml
+network:
+  ethernets:
+    $interface:
+        # dhcp4: true
+        # Set stasic IP
+        addresses:
+          - $ip
+        routes:
+          - to: default
+            via: $gateway
+        nameservers:
+          addresses:
+            - $dns1
+            - $dns2
+        optional: true
+EOF
+
+# Set permissions of yaml.
+chmod 600 /etc/netplan/99-custom-network.yaml
+
+# Apply settings.
+netplan apply
