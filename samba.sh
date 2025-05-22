@@ -7,6 +7,12 @@
 # -------------------- #
 # Variables
 # -------------------- #
+# netplan settings
+ip="10.0.10.3/24"
+gateway="10.0.10.1"
+dns1="223.5.5.5"
+dns2="223.6.6.6"
+
 # Server name
 server_name="server"
 
@@ -18,12 +24,6 @@ data_dir="/data/samba"
 # Interface to bind
 # Run `ip addr` or `ip link` to check interfaces.
 interface="eno1"
-
-# netplan settings
-ip="10.0.10.3/24"
-gateway="10.0.10.1"
-dns1="223.5.5.5"
-dns2="223.6.6.6"
 
 # Samba users. Use space as separator.
 users=( ppt my )
