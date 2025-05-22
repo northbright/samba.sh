@@ -49,6 +49,38 @@ ufw_allows=( ssh samba )
 # Install packages.
 apt update && apt install vim ufw samba -y
 
+# netplan settings
+
+# Disable CloudInit
+touch /etc/cloud/cloud-init.disabled
+
+# Create a custom network configure file.
+cat <<EOF > /etc/netplan/99-custom-network.yaml
+network:
+  ethernets:
+    $interface:
+        # dhcp4: true
+        # Set stasic IP
+        addresses:
+          - $ip
+        routes:
+          - to: default
+            via: $gateway
+        nameservers:
+          addresses:
+            - $dns1
+            - $dns2
+        optional: true
+EOF
+
+# Set permissions of yaml.
+chmod 600 /etc/netplan/99-custom-network.yaml
+
+# Apply settings.
+netplan apply
+
+# Samba settings
+
 # Backup smb.conf
 cp /etc/samba/smb.conf /etc/samba/smb.conf.bk
 
@@ -138,33 +170,3 @@ echo -ne "\n" | testparm
 systemctl enable smbd.service
 systemctl start smbd.service
 systemctl status smbd.service
-
-# netplan settings
-
-# Disable CloudInit
-touch /etc/cloud/cloud-init.disabled
-
-# Create a custom network configure file.
-cat <<EOF > /etc/netplan/99-custom-network.yaml
-network:
-  ethernets:
-    $interface:
-        # dhcp4: true
-        # Set stasic IP
-        addresses:
-          - $ip
-        routes:
-          - to: default
-            via: $gateway
-        nameservers:
-          addresses:
-            - $dns1
-            - $dns2
-        optional: true
-EOF
-
-# Set permissions of yaml.
-chmod 600 /etc/netplan/99-custom-network.yaml
-
-# Apply settings.
-netplan apply
