@@ -165,9 +165,8 @@ done
 ufw --force enable
 ufw status verbose
 
-# Start Samba service
+# Start(restart) Samba service
 echo -ne "\n" | testparm
 systemctl enable smbd.service
-systemctl stop smbd.service
-systemctl start smbd.service
+systemctl restart smbd.service
 systemctl status smbd.service
