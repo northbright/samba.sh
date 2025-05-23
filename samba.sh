@@ -45,10 +45,7 @@ ufw_allows=( ssh samba )
 # -------------------- #
 # Scripts
 # -------------------- #
-
-# Install packages.
-apt update && apt install vim ufw samba -y
-
+#
 # netplan settings
 
 # Disable cloud-init
@@ -81,6 +78,9 @@ chmod 600 /etc/netplan/99-custom-network.yaml
 
 # Apply settings.
 netplan apply
+
+# Install packages.
+apt update && apt install vim ufw samba -y
 
 # Samba settings
 
