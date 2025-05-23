@@ -5,7 +5,6 @@ It only works on Ubuntu currently.
 
 ## Usage
 * Modify `samba.sh` before run
-  * netplan settings(static IP)
   * Set server name(default: `server`)
   * Data dir(default: `/data/samba`)
     It'll create per-user data dir under data dir(e.g. `/data/samba/ppt` and `/data/samba/my`)
@@ -15,12 +14,6 @@ It only works on Ubuntu currently.
   * Allowed ports of ufw firewall(default: `ssh samba`)
 
 ```bash
-# netplan settings
-ip="10.0.10.3/24"
-gateway="10.0.10.1"
-dns1="223.5.5.5"
-dns2="223.6.6.6"
-
 # Server name
 server_name="server"
 

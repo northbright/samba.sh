@@ -7,11 +7,6 @@
 # -------------------- #
 # Variables
 # -------------------- #
-# netplan settings
-ip="10.0.10.3/24"
-gateway="10.0.10.1"
-dns1="223.5.5.5"
-dns2="223.6.6.6"
 
 # Server name
 server_name="server"
@@ -45,39 +40,6 @@ ufw_allows=( ssh samba )
 # -------------------- #
 # Scripts
 # -------------------- #
-#
-# netplan settings
-
-# Disable cloud-init
-touch /etc/cloud/cloud-init.disabled
-
-# Remove netplan configure file created by cloud-init
-rm /etc/netplan/50-cloud-init.yaml
-
-# Create a custom network configure file.
-cat <<EOF > /etc/netplan/99-custom-network.yaml
-network:
-  ethernets:
-    $interface:
-        # dhcp4: true
-        # Set stasic IP
-        addresses:
-          - $ip
-        routes:
-          - to: default
-            via: $gateway
-        nameservers:
-          addresses:
-            - $dns1
-            - $dns2
-        optional: true
-EOF
-
-# Set permissions of yaml.
-chmod 600 /etc/netplan/99-custom-network.yaml
-
-# Apply settings.
-netplan apply
 
 # Install packages.
 apt update && apt install vim ufw samba -y
