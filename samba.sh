@@ -51,8 +51,11 @@ apt update && apt install vim ufw samba -y
 
 # netplan settings
 
-# Disable CloudInit
+# Disable cloud-init
 touch /etc/cloud/cloud-init.disabled
+
+# Remove netplan configure file created by cloud-init
+rm /etc/netplan/50-cloud-init.yaml
 
 # Create a custom network configure file.
 cat <<EOF > /etc/netplan/99-custom-network.yaml
