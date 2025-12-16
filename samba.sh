@@ -18,7 +18,7 @@ data_dir="/data/samba"
 
 # Interface to bind
 # Run `ip addr` or `ip link` to check interfaces.
-# Use comma as separator for multiple interfaces(e.g. interfaces="eno1 ens1f0").
+# Use space as separator for multiple interfaces(e.g. interfaces="eno1 ens1f0").
 interfaces="eno1"
 
 # Samba users. Use space as separator.
