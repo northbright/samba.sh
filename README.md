@@ -8,7 +8,9 @@ It only works on Ubuntu currently.
   * Set server name(default: `server`)
   * Data dir(default: `/data/samba`)
     It'll create per-user data dir under data dir(e.g. `/data/samba/ppt` and `/data/samba/my`)
-  * Bind interfaces(run `ip addr` or `ip link` to determine which interfaces to bind)
+  * Bind interfaces
+    * Run `ip addr` or `ip link` to determine which interfaces to bind
+    * Use comma as separator for multiple interfaces(e.g. interfaces="eno1 ens1f0").
   * User names and passwords(may be changed by `sudo smbpasswd -U <USER>` later)
   * Samba shares of users
   * Allowed ports of ufw firewall(default: `ssh samba`)
@@ -24,7 +26,8 @@ data_dir="/data/samba"
 
 # Interface to bind
 # Run `ip addr` or `ip link` to check interfaces.
-interface="eno1"
+# Use comma as separator for multiple interfaces(e.g. interfaces="eno1 ens1f0").
+interfaces="eno1"
 
 # Samba users. Use space as separator.
 users=( ppt my )

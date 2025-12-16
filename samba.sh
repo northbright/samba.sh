@@ -18,7 +18,8 @@ data_dir="/data/samba"
 
 # Interface to bind
 # Run `ip addr` or `ip link` to check interfaces.
-interface="eno1"
+# Use comma as separator for multiple interfaces(e.g. interfaces="eno1 ens1f0").
+interfaces="eno1"
 
 # Samba users. Use space as separator.
 users=( ppt my )
@@ -56,9 +57,9 @@ cat <<EOF > /etc/samba/smb.conf
     server string = $server_name
     server role = standalone server
 
-    # Bind ethernet interface
+    # Bind ethernet interfaces
     # e.g. interfaces = lo enp1s0f0 enp1s0f1
-    interfaces = lo $interface
+    interfaces = lo $interfaces
     bind interfaces only = yes
 
     # Disable NetBIOS server(optional)
